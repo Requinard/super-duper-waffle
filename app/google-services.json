@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "920956807397",
+    "firebase_url": "https://project-2078306040770674610.firebaseio.com",
+    "project_id": "project-2078306040770674610",
+    "storage_bucket": "project-2078306040770674610.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920956807397:android:3cc730b6da8bde88",
+        "android_client_info": {
+          "package_name": "nl.fontys.sm.superduperwaffle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920956807397-ugbit9dbkbf6q0vi5u1arn2qsr8rvspa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoiw7dWvgnu3HE7GCyBGEocwUVFePCy40"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
