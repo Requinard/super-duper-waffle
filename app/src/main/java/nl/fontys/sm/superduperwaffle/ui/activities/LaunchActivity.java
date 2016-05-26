@@ -19,8 +19,8 @@ public class LaunchActivity extends Activity {
 
         DatabaseInstance ref = DatabaseSingleton.getDbInstance();
 
-        User u = new User("test", "test@test.com");
+        User u = new User();
 
-        u.save();
+        u.read("test");
     }
 }

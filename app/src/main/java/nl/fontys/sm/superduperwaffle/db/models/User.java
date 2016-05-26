@@ -1,7 +1,10 @@
 package nl.fontys.sm.superduperwaffle.db.models;
 
 import android.provider.ContactsContract;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ValueEventListener;
 import nl.fontys.sm.superduperwaffle.db.DatabaseInstance;
 import nl.fontys.sm.superduperwaffle.db.DatabaseSingleton;
 
@@ -27,6 +30,32 @@ public class User implements IModel {
      */
     public void setKey(String key) {
         this.key = key;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param key Key that the model is stored under
+     */
+    @Override
+    public void read(String key) {
+        DatabaseInstance dbInstance = DatabaseSingleton.getDbInstance();
+
+        dbInstance.getReferenceUser().child(key).getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+
+                setUsername(user.username);
+                setKey(user.key);
+                setEmail(user.email);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public String username;

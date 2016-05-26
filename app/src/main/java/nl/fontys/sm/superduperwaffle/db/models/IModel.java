@@ -26,4 +26,11 @@ public interface IModel {
      * @param key Key that needs to be set on the object
      */
     void setKey(String key);
+
+    /**
+     * Reads the specified model from the database
+     *
+     * @param key Key that the model is stored under
+     */
+    void read(String key);
 }
