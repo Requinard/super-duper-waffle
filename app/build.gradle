@@ -32,3 +32,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:$support_version"
 }
+
+apply plugin: 'com.google.gms.google-services'
