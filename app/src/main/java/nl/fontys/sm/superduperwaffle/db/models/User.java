@@ -1,0 +1,93 @@
+package nl.fontys.sm.superduperwaffle.db.models;
+
+import android.provider.ContactsContract;
+import com.google.firebase.database.IgnoreExtraProperties;
+import nl.fontys.sm.superduperwaffle.db.DatabaseInstance;
+import nl.fontys.sm.superduperwaffle.db.DatabaseSingleton;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * Handles users
+ */
+@IgnoreExtraProperties
+public class User implements IModel {
+    public String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param key Key that needs to be set on the object
+     */
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String username;
+    public String email;
+
+    public User() {
+    }
+
+    public User(String username, String email) {
+
+        this.username = username;
+        this.email = email;
+    }
+
+    public String getUsername() {
+
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void save() {
+        DatabaseInstance dbInstance = DatabaseSingleton.getDbInstance();
+
+        if (dbInstance.getReferenceUser().child("username").getRef() == null)
+            return;
+
+        setKey(dbInstance.getReferenceUser().push().getKey());
+
+        final Map<String, Object> postValues = toMap();
+        final Map<String, Object> childUpdates = new HashMap<>();
+
+        childUpdates.put(username, postValues);
+
+        dbInstance.getReferenceUser().updateChildren(childUpdates);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("username", username);
+        result.put("key", key);
+        result.put("email", email);
+
+        return result;
+    }
+}
