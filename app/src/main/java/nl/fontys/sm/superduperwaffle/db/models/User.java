@@ -19,6 +19,16 @@ import java.util.Objects;
 public class User implements IModel {
     public String key;
 
+    public User() {
+    }
+
+    public User(String username, String email) {
+
+        this.username = username;
+        this.email = email;
+    }
+
+
     public String getKey() {
         return key;
     }
@@ -61,14 +71,6 @@ public class User implements IModel {
     public String username;
     public String email;
 
-    public User() {
-    }
-
-    public User(String username, String email) {
-
-        this.username = username;
-        this.email = email;
-    }
 
     public String getUsername() {
 
