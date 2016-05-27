@@ -17,7 +17,9 @@ import java.util.Objects;
  */
 @IgnoreExtraProperties
 public class User implements IModel {
-    public String key;
+    private String key;
+    private String username;
+    private String email;
 
     public User() {
     }
@@ -27,7 +29,6 @@ public class User implements IModel {
         this.username = username;
         this.email = email;
     }
-
 
     public String getKey() {
         return key;
@@ -68,8 +69,6 @@ public class User implements IModel {
         });
     }
 
-    public String username;
-    public String email;
 
 
     public String getUsername() {
