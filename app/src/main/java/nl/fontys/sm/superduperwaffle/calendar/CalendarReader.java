@@ -48,7 +48,7 @@ public class CalendarReader {
                     null);
             if (cursor.moveToFirst()) {
                 do {
-                    Log.i("Calendar IDs", cursor.getString(7));
+                    //Log.i("Calendar IDs", cursor.getString(7));
                     //Log.i("Calendar", "Title: " + cursor.getString(1) +
                     //        " Start-Time: " + (new Date(cursor.getLong(3))).toString());
                     CalendarItem calendarItem = new CalendarItem(
