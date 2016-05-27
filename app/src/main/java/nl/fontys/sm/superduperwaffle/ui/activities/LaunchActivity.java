@@ -38,7 +38,7 @@ public class LaunchActivity extends Activity {
                     LaunchActivity.this,
                     calendar,
                     next);
-            for(CalendarItem calendarItem:calendarItems) {
+            for(CalendarItem calendarItem : calendarItems) {
                 if (calendarItem.calendarName.toLowerCase().contains("canvas")) {
                     Log.i("Calendar: ",
                             "Subject: " + calendarItem.subjectName + "\n" +
