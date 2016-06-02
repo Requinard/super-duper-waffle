@@ -2,6 +2,7 @@ package nl.fontys.sm.superduperwaffle.db.models.experimental;
 
 import android.graphics.PorterDuff;
 import com.google.common.base.Preconditions;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +28,20 @@ abstract public class Model implements IModel {
     @Key
     private String key;
 
+    public <T> T find(String key, final Class<T> current) {
+        SingleEvent<T> handler = new SingleEvent<>(current);
+
+        Preconditions.checkArgument(current.isAssignableFrom(this.getClass()), "Supplied Class did not match current class");
+
+        DatabaseInstance dbInstance = DatabaseSingleton.getDbInstance();
+
+        DatabaseReference reference = dbInstance.getDatabase().getReference(getClass().getSimpleName());
+
+        reference.child("key").child(key).addListenerForSingleValueEvent(handler);
+
+        return handler.getVal();
+    }
+
     /**
      * Pushes the object to the database
      */
@@ -51,7 +66,8 @@ abstract public class Model implements IModel {
         keyToModel.put(key, toMap());
 
         reference.child("key").updateChildren(keyToModel);
-        // Save all under keys
+
+
         /**
          * What it looks like
          *

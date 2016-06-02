@@ -21,8 +21,6 @@ public class LaunchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        User u = new User("d.diks", "d.diks94@gmail.com");
-
-        u.save();
+        new User().find("-KJFjKo7PxilTUiLWaLi", User.class);
     }
 }
