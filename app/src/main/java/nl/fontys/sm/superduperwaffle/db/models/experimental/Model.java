@@ -46,11 +46,11 @@ abstract public class Model implements IModel {
         // Get the value to put
 
         // Save it under unique keys
-        Map<String, Object> keyVal = new HashMap<>();
+        Map<String, Object> keyToModel = new HashMap<>();
 
-        keyVal.put(key, toMap());
+        keyToModel.put(key, toMap());
 
-        reference.child("key").updateChildren(keyVal);
+        reference.child("key").updateChildren(keyToModel);
         // Save all under keys
         /**
          * What it looks like
@@ -69,12 +69,12 @@ abstract public class Model implements IModel {
                     String node = field.get(this).toString();
 
                     // Create a new sub object with the field as key
-                    Map<String, Object> savedChild = new HashMap<>();
+                    Map<String, Object> fieldToKey = new HashMap<>();
 
-                    savedChild.put(node, key);
+                    fieldToKey.put(node, key);
 
                     // Get a reference with our field and then push the new child
-                    reference.child(field.getName()).updateChildren(savedChild);
+                    reference.child(field.getName()).updateChildren(fieldToKey);
 
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
