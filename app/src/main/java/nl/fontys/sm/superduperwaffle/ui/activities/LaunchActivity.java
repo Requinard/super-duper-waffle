@@ -6,7 +6,11 @@ import com.google.firebase.database.DatabaseReference;
 import nl.fontys.sm.superduperwaffle.R;
 import nl.fontys.sm.superduperwaffle.db.DatabaseInstance;
 import nl.fontys.sm.superduperwaffle.db.DatabaseSingleton;
+import nl.fontys.sm.superduperwaffle.db.models.Assignment;
 import nl.fontys.sm.superduperwaffle.db.models.User;
+import nl.fontys.sm.superduperwaffle.db.models.experimental.TestModel;
+
+import java.util.LinkedList;
 
 /**
  * Created by David on 5/20/2016.
@@ -17,10 +21,8 @@ public class LaunchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        DatabaseInstance ref = DatabaseSingleton.getDbInstance();
+        User u = new User("d.diks", "d.diks94@gmail.com");
 
-        User u = new User();
-
-        u.read("test");
+        u.save();
     }
 }
