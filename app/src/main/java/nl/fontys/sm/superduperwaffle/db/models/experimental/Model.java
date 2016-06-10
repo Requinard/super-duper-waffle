@@ -1,23 +1,23 @@
 package nl.fontys.sm.superduperwaffle.db.models.experimental;
 
-import android.graphics.PorterDuff;
-import com.google.common.base.Preconditions;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.FirebaseDatabase;
 import nl.fontys.sm.superduperwaffle.db.DatabaseInstance;
 import nl.fontys.sm.superduperwaffle.db.DatabaseSingleton;
 import nl.fontys.sm.superduperwaffle.db.models.IModel;
 import nl.fontys.sm.superduperwaffle.db.models.experimental.annotations.Key;
 import nl.fontys.sm.superduperwaffle.db.models.experimental.annotations.Save;
+import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 /**
  * Created by David on 6/2/2016.
@@ -26,20 +26,56 @@ abstract public class Model implements IModel {
 
     @Save
     @Key
+    /**
+     * Unique key to distinguis between objects
+     */
     private String key;
 
-    public <T> T find(String key, final Class<T> current) {
-        SingleEvent<T> handler = new SingleEvent<>(current);
+    private static ExecutorService threadPool = Executors.newFixedThreadPool(2);
 
-        Preconditions.checkArgument(current.isAssignableFrom(this.getClass()), "Supplied Class did not match current class");
+    /**
+     * Indicates whether the model is readable or if it's still pending initialization
+     */
+    @Deprecated
+    private boolean isReady = false;
 
-        DatabaseInstance dbInstance = DatabaseSingleton.getDbInstance();
+    public static <T> FutureTask<T> find(final String key, final Class<T> current) {
+        final FutureTask<T> futureTask = new FutureTask<T>(new Callable<T>() {
+            /**
+             * Computes a result, or throws an exception if unable to do so.
+             *
+             * @return computed result
+             * @throws Exception if unable to compute a result
+             */
+            @Override
+            public T call() throws Exception {
+                SingleValueEventListener<T> handler = new SingleValueEventListener<>(current);
 
-        DatabaseReference reference = dbInstance.getDatabase().getReference(getClass().getSimpleName());
+                FirebaseDatabase firebaseDatabase = DatabaseSingleton.getDbInstance().getDatabase();
+                firebaseDatabase.getReference(current.getSimpleName())
+                        .child("key")
+                        .child(key)
+                        .addListenerForSingleValueEvent(handler);
 
-        reference.child("key").child(key).addListenerForSingleValueEvent(handler);
+                synchronized (handler) {
+                    handler.wait();
+                }
+                return handler.getVal();
+            }
+        });
 
-        return handler.getVal();
+        threadPool.submit(futureTask);
+
+        return futureTask;
+    }
+
+    private <T> void updateFields(DataSnapshot snapshot, Class<T> type) {
+        try {
+            BeanUtils.copyProperties((T) this, snapshot.getValue(type));
+            isReady = true;
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

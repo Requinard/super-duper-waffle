@@ -7,7 +7,7 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * Created by David on 6/2/2016.
  */
-public class SingleEvent<T> implements ValueEventListener {
+public class SingleValueEventListener<T> implements ValueEventListener {
     private T val;
     private Class<T> type;
 
@@ -15,7 +15,7 @@ public class SingleEvent<T> implements ValueEventListener {
         return val != null;
     }
 
-    public SingleEvent(Class<T> type) {
+    public SingleValueEventListener(Class<T> type) {
         this.type = type;
     }
 
@@ -27,6 +27,10 @@ public class SingleEvent<T> implements ValueEventListener {
 
     public void onDataChange(DataSnapshot dataSnapshot) {
         val = dataSnapshot.getValue(type);
+
+        synchronized (this) {
+            this.notifyAll();
+        }
     }
 
     @Override
