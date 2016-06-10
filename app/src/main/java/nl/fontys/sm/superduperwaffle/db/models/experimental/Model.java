@@ -1,6 +1,6 @@
 package nl.fontys.sm.superduperwaffle.db.models.experimental;
 
-import com.google.firebase.database.DataSnapshot;
+import android.util.Log;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import nl.fontys.sm.superduperwaffle.db.DatabaseInstance;
@@ -9,21 +9,18 @@ import nl.fontys.sm.superduperwaffle.db.models.IModel;
 import nl.fontys.sm.superduperwaffle.db.models.experimental.annotations.Key;
 import nl.fontys.sm.superduperwaffle.db.models.experimental.annotations.Save;
 import nl.fontys.sm.superduperwaffle.util.ThreadService;
-import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
 /**
  * Created by David on 6/2/2016.
  */
 abstract public class Model implements IModel {
+    private static final String PREFIX = "DB";
 
     @Save
     @Key
@@ -32,24 +29,17 @@ abstract public class Model implements IModel {
      */
     private String key;
 
-    private static ExecutorService threadPool = Executors.newFixedThreadPool(2);
-
-    /**
-     * Indicates whether the model is readable or if it's still pending initialization
-     */
-    @Deprecated
-    private boolean isReady = false;
-
     /**
      * Gets a model from the db based on a specific key value lookup
      *
-     * @param key
-     * @param current
-     * @param field
-     * @param <T>
-     * @return
+     * @param key     Key to perform a lookup on
+     * @param current Class that needs to be returned
+     * @param field   Field that we're performing a lookup on
+     * @param <T>     Type of class to be returned
+     * @return FutureTask that is in queue for execution. No need to run it yourself
      */
     public static <T> FutureTask<T> find(final String key, final Class<T> current, String field) {
+        Log.d(PREFIX, String.format("Retrieving data from database. Class %s Field %s key %s", current.getSimpleName(), field, key));
         TypedSingleValueEventListener<String> handler = new TypedSingleValueEventListener<>(String.class);
 
         FirebaseDatabase.getInstance()
@@ -60,12 +50,15 @@ abstract public class Model implements IModel {
 
         synchronized (handler) {
             try {
+                Log.d(PREFIX, "Waiting on Key lookup to complete");
                 handler.wait();
+                Log.d(PREFIX, "Key lookup completed");
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Log.d(PREFIX, e.toString());
             }
         }
 
+        Log.d(PREFIX, "Now going to retrieve object trhough key");
         return find(handler.getVal(), current);
     }
 
@@ -75,9 +68,13 @@ abstract public class Model implements IModel {
      * @param key     key to find it (unique)
      * @param current class to instantiate
      * @param <T>     Type of class to instantiate
-     * @return futureTask that holds our value
+     * @return FutureTask that is in queue for execution. No need to run it yourself
      */
     public static <T> FutureTask<T> find(final String key, final Class<T> current) {
+        Log.d(PREFIX, String.format("Performing key lookup on Class %s. Key is %s", current.getSimpleName(), key));
+
+        Log.d(PREFIX, String.format("Creating FutureTask"));
+
         final FutureTask<T> futureTask = new FutureTask<T>(new Callable<T>() {
             /**
              * Computes a result, or throws an exception if unable to do so.
@@ -87,6 +84,8 @@ abstract public class Model implements IModel {
              */
             @Override
             public T call() throws Exception {
+                Log.d(PREFIX, String.format("FutureTask is being executed at %s", System.currentTimeMillis()));
+
                 TypedSingleValueEventListener<T> handler = new TypedSingleValueEventListener<>(current);
 
                 FirebaseDatabase firebaseDatabase = DatabaseSingleton.getDbInstance().getDatabase();
@@ -95,25 +94,20 @@ abstract public class Model implements IModel {
                         .child(key)
                         .addListenerForSingleValueEvent(handler);
 
+
                 synchronized (handler) {
+                    Log.d(PREFIX, "Waiting on database callback to complete");
                     handler.wait();
+                    Log.d(PREFIX, "Database callback completed");
                 }
                 return handler.getVal();
             }
         });
 
+        Log.d(PREFIX, String.format("Submitting task at %s", System.currentTimeMillis()));
         ThreadService.submit(futureTask);
 
         return futureTask;
-    }
-
-    private <T> void updateFields(DataSnapshot snapshot, Class<T> type) {
-        try {
-            BeanUtils.copyProperties((T) this, snapshot.getValue(type));
-            isReady = true;
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -121,14 +115,13 @@ abstract public class Model implements IModel {
      */
     @Override
     public void save() {
+        Log.d(PREFIX, String.format("Saving instance of %s at %s", this.getClass().getName(), System.currentTimeMillis()));
+
         // Get the database
         DatabaseInstance dbInstance = DatabaseSingleton.getDbInstance();
 
         // Get our model
         DatabaseReference reference = dbInstance.getDatabase().getReference(this.getClass().getSimpleName());
-
-        if (key == null)
-            key = reference.push().getKey();
 
         //todo: add logic to find pre-existing entries
 
@@ -139,6 +132,7 @@ abstract public class Model implements IModel {
 
         keyToModel.put(key, toMap());
 
+        Log.d(PREFIX, "Updating key child for this class");
         reference.child("key").updateChildren(keyToModel);
 
 
@@ -150,8 +144,12 @@ abstract public class Model implements IModel {
          * - - unique key to find object with
          * repeat
          */
+
+        Log.d(PREFIX, "Now saving extra key fields");
+
         for (Field field : this.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(Key.class)) {
+                Log.d(PREFIX, String.format("Field %s is classified as a key", field.getName()));
                 try {
                     field.setAccessible(true);
 
@@ -162,7 +160,7 @@ abstract public class Model implements IModel {
                     Map<String, Object> fieldToKey = new HashMap<>();
 
                     fieldToKey.put(node, key);
-
+                    Log.d(PREFIX, "Pushing subkey to database");
                     // Get a reference with our field and then push the new child
                     reference.child(field.getName()).updateChildren(fieldToKey);
 
@@ -180,6 +178,8 @@ abstract public class Model implements IModel {
      */
     @Override
     public Map<String, Object> toMap() {
+        Log.d(PREFIX, String.format("Marshalling class %s", this.getClass().getName()));
+
         Map<String, Object> map = new HashMap<>();
 
         // Get fields in subclass
@@ -189,6 +189,8 @@ abstract public class Model implements IModel {
         for (Field field : fields) {
             // If field is not transient
             if (field.isAnnotationPresent(Save.class)) {
+                Log.d(PREFIX, String.format("Saving field %s", field.getName()));
+
                 field.setAccessible(true);
 
                 try {
@@ -199,6 +201,8 @@ abstract public class Model implements IModel {
                 }
             }
         }
+
+        Log.d(PREFIX, "Marshalling complete");
         return map;
     }
 }
