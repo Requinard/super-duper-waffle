@@ -25,6 +25,7 @@ public class User extends Model {
     @Key
     private String username;
 
+    @Key
     @Save
     private String email;
 

@@ -8,6 +8,7 @@ import nl.fontys.sm.superduperwaffle.db.DatabaseSingleton;
 import nl.fontys.sm.superduperwaffle.db.models.IModel;
 import nl.fontys.sm.superduperwaffle.db.models.experimental.annotations.Key;
 import nl.fontys.sm.superduperwaffle.db.models.experimental.annotations.Save;
+import nl.fontys.sm.superduperwaffle.util.ThreadService;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.Field;
@@ -39,6 +40,43 @@ abstract public class Model implements IModel {
     @Deprecated
     private boolean isReady = false;
 
+    /**
+     * Gets a model from the db based on a specific key value lookup
+     *
+     * @param key
+     * @param current
+     * @param field
+     * @param <T>
+     * @return
+     */
+    public static <T> FutureTask<T> find(final String key, final Class<T> current, String field) {
+        TypedSingleValueEventListener<String> handler = new TypedSingleValueEventListener<>(String.class);
+
+        FirebaseDatabase.getInstance()
+                .getReference(current.getSimpleName())
+                .child(field)
+                .child(key)
+                .addListenerForSingleValueEvent(handler);
+
+        synchronized (handler) {
+            try {
+                handler.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return find(handler.getVal(), current);
+    }
+
+    /**
+     * Gets a model from the db based on the key
+     *
+     * @param key     key to find it (unique)
+     * @param current class to instantiate
+     * @param <T>     Type of class to instantiate
+     * @return futureTask that holds our value
+     */
     public static <T> FutureTask<T> find(final String key, final Class<T> current) {
         final FutureTask<T> futureTask = new FutureTask<T>(new Callable<T>() {
             /**
@@ -49,7 +87,7 @@ abstract public class Model implements IModel {
              */
             @Override
             public T call() throws Exception {
-                SingleValueEventListener<T> handler = new SingleValueEventListener<>(current);
+                TypedSingleValueEventListener<T> handler = new TypedSingleValueEventListener<>(current);
 
                 FirebaseDatabase firebaseDatabase = DatabaseSingleton.getDbInstance().getDatabase();
                 firebaseDatabase.getReference(current.getSimpleName())
@@ -64,7 +102,7 @@ abstract public class Model implements IModel {
             }
         });
 
-        threadPool.submit(futureTask);
+        ThreadService.submit(futureTask);
 
         return futureTask;
     }

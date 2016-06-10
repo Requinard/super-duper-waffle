@@ -25,7 +25,7 @@ public class LaunchActivity extends Activity {
         ThreadService.queue(new Runnable() {
             @Override
             public void run() {
-                FutureTask task = Model.find("-KJFjKo7PxilTUiLWaLi", User.class);
+                FutureTask task = Model.find("requinard", User.class, "username");
 
                 try {
                     User user = (User) task.get(10L, TimeUnit.SECONDS);
