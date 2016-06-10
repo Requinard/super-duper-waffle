@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.util.Log;
+import android.view.ViewDebug;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class CalendarReader {
     private enum EventProperty {
-        SubjectName,
+        CanvasSubjectName,
         CalendarName
     }
 
@@ -68,14 +69,17 @@ public class CalendarReader {
             if (cursor.moveToFirst()) {
                 do {
                     CalendarItem calendarItem = new CalendarItem(
-                            extractInfo(EventProperty.SubjectName, cursor.getString(ProjectionID.Title.ordinal())),
+                            extractInfo(
+                                    EventProperty.CanvasSubjectName,
+                                    cursor.getString(ProjectionID.Title.ordinal())
+                            ),
                             cursor.getLong(ProjectionID.DateStart.ordinal()),
                             cursor.getLong(ProjectionID.DateEnd.ordinal()),
                             cursor.getInt(ProjectionID.AllDay.ordinal()) == 1,
                             cursor.getString(ProjectionID.EventLocation.ordinal()),
                             cursor.getString(ProjectionID.Description.ordinal()),
-                            cursor.getString(ProjectionID.CalendarName.ordinal())
-                    );
+                            cursor.getString(ProjectionID.CalendarName.ordinal()
+                    ));
 
                     if (calendarItem.calendarName.toLowerCase().contains(matchCalendarName.toLowerCase()) ||
                             matchCalendarName == "") {
@@ -93,8 +97,13 @@ public class CalendarReader {
 
     private String extractInfo(EventProperty prop, String input) {
         switch(prop) {
-            case SubjectName:
-                return input.substring(input.indexOf("[")+1, input.indexOf("]"));
+            case CanvasSubjectName:
+                int indexStart = input.indexOf("[");
+                int indexEnd = input.indexOf("]");
+                if (indexStart == -1 || indexEnd == -1) {
+                    return input;
+                }
+                return input.substring(indexStart+1, indexEnd);
             case CalendarName:
                 return input;
         }
