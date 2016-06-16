@@ -2,7 +2,9 @@ package nl.fontys.sm.superduperwaffle.ui.activities;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -11,6 +13,14 @@ import java.util.Calendar;
 import java.util.List;
 
 import nl.fontys.sm.superduperwaffle.R;
+import nl.fontys.sm.superduperwaffle.db.models.User;
+import nl.fontys.sm.superduperwaffle.db.models.experimental.Model;
+import nl.fontys.sm.superduperwaffle.util.ThreadService;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import nl.fontys.sm.superduperwaffle.calendar.CalendarItem;
 import nl.fontys.sm.superduperwaffle.calendar.CalendarReader;
 
@@ -23,6 +33,21 @@ public class LaunchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
+        ThreadService.queue(new Runnable() {
+            @Override
+            public void run() {
+                FutureTask task = Model.find("requinard", User.class, "username");
+
+                try {
+                    User user = (User) task.get(10L, TimeUnit.SECONDS);
+
+                    Log.d("WHAT", user.getEmail());
+                } catch (InterruptedException | TimeoutException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         findViewById(R.id.testButton).setOnClickListener(handleClick);
     }
 
@@ -30,22 +55,8 @@ public class LaunchActivity extends Activity {
     // string "canvas" as calendar ID.
     private View.OnClickListener handleClick = new View.OnClickListener() {
         public void onClick(View arg0) {
-            CalendarReader calendarReader = new CalendarReader();
-            Calendar calendar = Calendar.getInstance();
-            Calendar next = Calendar.getInstance();
-            next.add(Calendar.DATE, 30);
-            List<CalendarItem> calendarItems = calendarReader.getEvents(
-                    LaunchActivity.this,
-                    calendar,
-                    next);
-            for(CalendarItem calendarItem : calendarItems) {
-                if (calendarItem.calendarName.toLowerCase().contains("canvas")) {
-                    Log.i("Calendar: ",
-                            "Subject: " + calendarItem.subjectName + "\n" +
-                                    "Description: " + calendarItem.description + "\n"
-                    );
-                }
-            }
+            Intent intent = new Intent(LaunchActivity.this, ImportCalendarActivity.class);
+            startActivity(intent);
         }
     };
 }
