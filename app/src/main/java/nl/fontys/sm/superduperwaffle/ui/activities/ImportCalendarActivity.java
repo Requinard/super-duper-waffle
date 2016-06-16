@@ -2,9 +2,10 @@ package nl.fontys.sm.superduperwaffle.ui.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 
 import nl.fontys.sm.superduperwaffle.R;
+import nl.fontys.sm.superduperwaffle.calendar.CalendarReader;
 
 /**
  * Created by MT on 10-Jun-16.
@@ -15,9 +16,13 @@ public class ImportCalendarActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import);
+
+        CalendarReader reader = new CalendarReader();
+        for (String cal : reader.getCalendars(ImportCalendarActivity.this)) {
+            Log.d("CalendarNames", cal);
+        }
+
     }
-
-
 
     /*
     CalendarReader calendarReader = new CalendarReader();

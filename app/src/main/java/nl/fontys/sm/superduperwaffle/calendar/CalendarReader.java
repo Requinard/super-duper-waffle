@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.util.Log;
@@ -33,6 +34,31 @@ public class CalendarReader {
         AllDay,
         EventLocation,
         CalendarName
+    }
+
+    public List<String> getCalendars(Context context) {
+        List<String> calendarNames = new ArrayList<>();
+        String[] projection = new String[]{
+                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME
+        };
+
+        ContentResolver contentResolver = context.getContentResolver();
+        Uri uri = CalendarContract.Calendars.CONTENT_URI;
+
+        try {
+            Cursor cursor = contentResolver.query(uri,
+                    projection,
+                    null,
+                    null,
+                    null);
+            while (cursor.moveToNext()) {
+                calendarNames.add(cursor.getString(0));
+            }
+        }
+        catch (SecurityException ex) {
+            Toast.makeText(context, "No calendar permission", Toast.LENGTH_SHORT).show();
+        }
+        return calendarNames;
     }
 
     public List<CalendarItem> getEvents(Context context,

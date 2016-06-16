@@ -27,8 +27,6 @@ public class LaunchActivity extends Activity {
         findViewById(R.id.testButton).setOnClickListener(handleClick);
     }
 
-    // Example of how the calendar events for the next months can be retrieved, containing the
-    // string "canvas" as calendar ID.
     private View.OnClickListener handleClick = new View.OnClickListener() {
         public void onClick(View arg0) {
             Intent intent = new Intent(LaunchActivity.this, ImportCalendarActivity.class);
