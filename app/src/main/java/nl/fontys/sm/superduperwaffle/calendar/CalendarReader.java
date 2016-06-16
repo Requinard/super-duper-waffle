@@ -36,7 +36,7 @@ public class CalendarReader {
         CalendarName
     }
 
-    public List<String> getCalendars(Context context) {
+    public List<String> GetCalendars(Context context) {
         List<String> calendarNames = new ArrayList<>();
         String[] projection = new String[]{
                 CalendarContract.Calendars.CALENDAR_DISPLAY_NAME
@@ -61,7 +61,7 @@ public class CalendarReader {
         return calendarNames;
     }
 
-    public List<CalendarItem> getEvents(Context context,
+    public List<CalendarItem> GetEvents(Context context,
                                         Calendar start,
                                         Calendar end,
                                         String matchCalendarName) {
