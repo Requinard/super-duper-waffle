@@ -11,20 +11,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import nl.fontys.sm.superduperwaffle.R;
+import nl.fontys.sm.superduperwaffle.db.models.ContainerLoggedUser;
 import nl.fontys.sm.superduperwaffle.db.models.Course;
 import nl.fontys.sm.superduperwaffle.db.models.User;
-import nl.fontys.sm.superduperwaffle.db.models.experimental.userLogged;
 
 /**
  * Created by Antonio M on 16-6-2016.
  */
 public class AddCourseActivity extends Activity {
 
-    String[] testCourses = { "GSO3","JSF31","JSF32","JCC","SAM3","Proftaak", "VSA", "PPO", "KPO", };
-    User testUser = new User("Frank", "a@hotmail.com");
+    String[] testCourses = { "GSO3","JSF31","JSF32","JCC","SAM3","Proftaak", "VSA", "PPO", "KPO"};
+    User loggedUser = ContainerLoggedUser.getInstance().getUser();
     Course course;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +46,13 @@ public class AddCourseActivity extends Activity {
             public void onClick(View v) {
                 course = new Course(acTextView.getText().toString());
                 try {
-                    testUser.addCourse(course);
+                    loggedUser.addCourse(course);
                 } catch(Exception e){
                     System.out.println(e.getMessage());
                 }
 
                 String courses = "";
-                for (Course c : testUser.getCourses()) {
+                for (Course c : loggedUser.getCourses()) {
                     if (courses.equals(""))
                         courses = c.getName();
                     else
