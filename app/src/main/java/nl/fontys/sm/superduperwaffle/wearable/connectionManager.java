@@ -9,10 +9,10 @@ import java.util.Random;
 /**
  * Created by Jeroen0606 on 16-6-2016.
  */
-public class ConnectionManager {
+public class connectionManager {
     private List<Integer> heartRateSensor;
     private List<Integer> skinConductionSensor;
-    public ConnectionManager() {
+    public connectionManager() {
         heartRateSensor = new ArrayList<>();
         skinConductionSensor = new ArrayList<>();
         fillDummyData();
