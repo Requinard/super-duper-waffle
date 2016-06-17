@@ -33,21 +33,25 @@
         android:layout_marginTop="50dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:text="Log in"
         android:id="@+id/btnLogin"
         android:layout_marginTop="50dp"
+        android:background="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         android:layout_below="@+id/tbPassword"
         android:layout_alignStart="@+id/tbPassword"
         android:layout_alignEnd="@+id/tbPassword" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:text="Register"
         android:id="@+id/btnRegister"
         android:layout_marginTop="20dp"
+        android:background="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         android:layout_below="@+id/btnLogin"
         android:layout_alignStart="@+id/btnLogin"
         android:layout_alignEnd="@+id/btnLogin" />
