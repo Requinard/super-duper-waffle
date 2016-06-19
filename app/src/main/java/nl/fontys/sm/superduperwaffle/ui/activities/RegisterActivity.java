@@ -8,21 +8,25 @@ import android.widget.Button;
 
 import nl.fontys.sm.superduperwaffle.R;
 
-public class login extends AppCompatActivity {
+/**
+ * Created by Gebruiker on 19-6-2016.
+ */
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button btn = (Button)findViewById(R.id.btnLogin);
-        btn.setOnClickListener(handleClick );
+        Button btnRegister = (Button)findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(handleClickRegister );
 
     }
 
-    private View.OnClickListener handleClick = new View.OnClickListener(){
+
+    private View.OnClickListener handleClickRegister = new View.OnClickListener(){
         public void onClick(View arg0){
-            Intent intent = new Intent(login.this,HomeActivity.class);
+            Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
             startActivity(intent);
         }
     };
