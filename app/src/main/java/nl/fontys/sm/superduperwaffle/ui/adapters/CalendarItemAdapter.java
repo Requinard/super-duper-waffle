@@ -2,6 +2,7 @@ package nl.fontys.sm.superduperwaffle.ui.adapters;
 
 import android.content.Context;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import nl.fontys.sm.superduperwaffle.R;
 import nl.fontys.sm.superduperwaffle.calendar.CalendarItem;
@@ -32,6 +34,7 @@ public class CalendarItemAdapter extends ArrayAdapter<CalendarItem>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d("CalendarItemAdapter", "getView()");
 
         CalendarItem requestedItem = calendarItems.get(position);
 
@@ -44,16 +47,26 @@ public class CalendarItemAdapter extends ArrayAdapter<CalendarItem>{
 
         TextView subjectTitle = (TextView) itemView.findViewById(R.id.tvEventSubjectTitle);
         TextView deadline = (TextView) itemView.findViewById(R.id.tvEventDeadline);
-        TextView description = (TextView) itemView.findViewById(R.id.tvEventDescription);
+        //TextView description = (TextView) itemView.findViewById(R.id.tvEventDescription);
 
         subjectTitle.setText(requestedItem.subjectName);
 
         Date date = new Date(requestedItem.stopTime);
-        DateFormat formatter = new SimpleDateFormat("d M Y HH:MM");
+        //DateFormat formatter = new SimpleDateFormat("d M Y HH:MM", Locale.ENGLISH);
+        DateFormat formatter  =new SimpleDateFormat("dd/MM/yy");
         deadline.setText(formatter.format(date));
 
-        description.setText(requestedItem.description);
-
+        //description.setText(requestedItem.description);
         return itemView;
+    }
+
+    @Override
+    public int getCount() {
+        return calendarItems.size();
+    }
+
+    @Override
+    public CalendarItem getItem(int position) {
+        return calendarItems.get(position);
     }
 }
