@@ -24,3 +24,7 @@
         />
 
 </LinearLayout>
+
+    <!--
+        Deze is het calendar_item van de listview van je deadlines
+    -->

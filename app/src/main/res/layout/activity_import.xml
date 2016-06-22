@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Importeer kalender"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        />
 
     <RadioGroup
         android:id="@+id/radiogroup"
@@ -21,4 +22,17 @@
         android:layout_centerVertical="true"
         android:orientation="vertical" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:text="30"
+        android:id="@+id/etImportRange"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Import"
+        android:id="@+id/btnImportCalendar"/>
+    
 </LinearLayout>

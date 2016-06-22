@@ -1,6 +1,7 @@
 package nl.fontys.sm.superduperwaffle.ui.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +28,10 @@ public class ShowDeadlinesActivity extends Activity {
         setContentView(R.layout.activity_showdeadlines);
 
         Bundle extras = getIntent().getExtras();
-        ArrayList<CalendarItem> calendarItems = (ArrayList<CalendarItem>)extras.getSerializable("deadlineList");
+        // why final ;_;
+        final ArrayList<CalendarItem> calendarItems =
+                (ArrayList<CalendarItem>)extras.getSerializable("deadlineList");
+
         if (extras != null) {
             Log.d("DeadlinesList", "extras != null");
             Log.d("DeadlinesList", "calendarItems.size() == " + calendarItems.size());
@@ -42,12 +46,17 @@ public class ShowDeadlinesActivity extends Activity {
 
             listView.setAdapter(calendarItemAdapter);
 
-            /*listView.setOnClickListener(new AdapterView.OnItemClickListener(){
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-
+                    Intent intent = new Intent(getBaseContext(), ShowDeadlineDetailsActivity.class);
+                    CalendarItem calendarItem = calendarItems.get(position);
+                    intent.putExtra("coursename", calendarItem.subjectName);    // string
+                    intent.putExtra("deadline", calendarItem.stopTime);         // long date
+                    intent.putExtra("description", calendarItem.description);   // string (big)
+                    startActivity(intent);
                 }
-            });*/
+            });
 
             /*for(CalendarItem calendarItem : calendarItems) {
 

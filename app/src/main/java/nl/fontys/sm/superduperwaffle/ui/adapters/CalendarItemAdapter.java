@@ -34,7 +34,7 @@ public class CalendarItemAdapter extends ArrayAdapter<CalendarItem>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d("CalendarItemAdapter", "getView()");
+        //Log.d("CalendarItemAdapter", "getView()");
 
         CalendarItem requestedItem = calendarItems.get(position);
 
