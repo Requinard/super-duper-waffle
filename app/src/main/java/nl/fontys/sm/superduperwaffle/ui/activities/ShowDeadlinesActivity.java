@@ -2,6 +2,7 @@ package nl.fontys.sm.superduperwaffle.ui.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,9 +37,24 @@ public class ShowDeadlinesActivity extends Activity {
             Log.d("DeadlinesList", "extras != null");
             Log.d("DeadlinesList", "calendarItems.size() == " + calendarItems.size());
 
-            //LinearLayout linearLayout = (LinearLayout)findViewById(R.id.deadlineListLayout);
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.deadlineListLayout);
 
             ListView listView = (ListView)findViewById(R.id.deadlineListView);
+
+            // shit
+            if (calendarItems.size() == 0) {
+                TextView tv = new TextView(getBaseContext());
+                tv.setText("Geen deadlines gevonden");
+                tv.setTextColor(Color.BLACK);
+                tv.setTextSize(20); // blaaaah
+                tv.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT));
+                linearLayout.addView(tv, 0);
+                Log.d("CalendarItems", "None");
+                return;
+            }
+
             CalendarItemAdapter calendarItemAdapter = new CalendarItemAdapter(
                     getApplicationContext(),
                     calendarItems
@@ -57,29 +73,6 @@ public class ShowDeadlinesActivity extends Activity {
                     startActivity(intent);
                 }
             });
-
-            /*for(CalendarItem calendarItem : calendarItems) {
-
-
-
-                TextView itemString = new TextView(this);
-
-                long val = calendarItem.stopTime;
-                Date date=new Date(val);
-                SimpleDateFormat df2 = new SimpleDateFormat("dd/MM/yy");
-                String dateText = df2.format(date);
-
-                itemString.setText(
-                                    "Subject: " + calendarItem.subjectName + "\n" +
-                                    "Description: " + calendarItem.description + "\n" +
-                                    "Deadline: " + dateText
-                );
-                itemString.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.FILL_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                linearLayout.addView(itemString);
-            }*/
         }
     }
 }
