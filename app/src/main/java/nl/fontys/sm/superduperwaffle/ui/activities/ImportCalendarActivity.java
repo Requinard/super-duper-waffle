@@ -1,6 +1,7 @@
 package nl.fontys.sm.superduperwaffle.ui.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,8 +32,6 @@ public class ImportCalendarActivity extends Activity {
         List<String> calendarNames = calendarReader.GetCalendars(ImportCalendarActivity.this);
 
         addRadioButtons(calendarNames);
-
-
 
     }
 
@@ -61,17 +61,28 @@ public class ImportCalendarActivity extends Activity {
         Calendar next = Calendar.getInstance();
         next.add(Calendar.DATE, 30);
 
-        List<CalendarItem> calendarItems = calendarReader.GetEvents(
+        /*List<CalendarItem> calendarItems = calendarReader.GetEvents(
+                ImportCalendarActivity.this,
+                calendar,
+                next,
+                name);*/
+        ArrayList<CalendarItem> calendarItems = new ArrayList<CalendarItem>();
+        calendarItems = (ArrayList<CalendarItem>)calendarReader.GetEvents(
                 ImportCalendarActivity.this,
                 calendar,
                 next,
                 name);
 
-        for(CalendarItem calendarItem : calendarItems) {
-            Log.d("Calendar: ",
+        Intent intent = new Intent(getBaseContext(), ShowDeadlinesActivity.class);
+        intent.putExtra("deadlineList", calendarItems);
+        startActivity(intent);
+
+        //for(CalendarItem calendarItem : calendarItems) {
+            /*Log.d("Calendar: ",
                     "Subject: " + calendarItem.subjectName + "\n" +
                             "Description: " + calendarItem.description + "\n"
-            );
-        }
+            );*/
+        //}
     }
+
 }
