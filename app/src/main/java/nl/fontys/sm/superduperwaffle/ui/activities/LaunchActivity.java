@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.List;
 
 import nl.fontys.sm.superduperwaffle.R;
+import nl.fontys.sm.superduperwaffle.db.models.Assignment;
 import nl.fontys.sm.superduperwaffle.db.models.User;
 import nl.fontys.sm.superduperwaffle.db.models.experimental.Model;
 import nl.fontys.sm.superduperwaffle.util.ThreadService;
@@ -32,7 +31,9 @@ public class LaunchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        ThreadService.queue(new Runnable() {
+        new User("requinard", "d.diks94@gmail.com").save();
+
+        ThreadService.submit(new Runnable() {
             @Override
             public void run() {
                 FutureTask task = Model.find("requinard", User.class, "username");

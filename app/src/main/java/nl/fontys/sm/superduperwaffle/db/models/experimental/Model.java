@@ -1,8 +1,7 @@
 package nl.fontys.sm.superduperwaffle.db.models.experimental;
 
 import android.util.Log;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 import nl.fontys.sm.superduperwaffle.db.DatabaseInstance;
 import nl.fontys.sm.superduperwaffle.db.DatabaseSingleton;
 import nl.fontys.sm.superduperwaffle.db.models.IModel;
@@ -36,7 +35,7 @@ abstract public class Model implements IModel {
      * @param current Class that needs to be returned
      * @param field   Field that we're performing a lookup on
      * @param <T>     Type of class to be returned
-     * @return FutureTask that is in queue for execution. No need to run it yourself
+     * @return FutureTask that is in submit for execution. No need to run it yourself
      */
     public static <T> FutureTask<T> find(final String key, final Class<T> current, String field) {
         Log.d(PREFIX, String.format("Retrieving data from database. Class %s Field %s key %s", current.getSimpleName(), field, key));
@@ -68,7 +67,7 @@ abstract public class Model implements IModel {
      * @param key     key to find it (unique)
      * @param current class to instantiate
      * @param <T>     Type of class to instantiate
-     * @return FutureTask that is in queue for execution. No need to run it yourself
+     * @return FutureTask that is in submit for execution. No need to run it yourself
      */
     public static <T> FutureTask<T> find(final String key, final Class<T> current) {
         Log.d(PREFIX, String.format("Performing key lookup on Class %s. Key is %s", current.getSimpleName(), key));
@@ -124,7 +123,25 @@ abstract public class Model implements IModel {
         DatabaseReference reference = dbInstance.getDatabase().getReference(this.getClass().getSimpleName());
 
         //todo: add logic to find pre-existing entries
+        Runnable keyLookup = new Runnable() {
+            @Override
+            public void run() {
+                ;
+            }
+        };
 
+        ThreadService.submit(keyLookup);
+
+        synchronized (keyLookup) {
+            try {
+                keyLookup.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (key == null)
+            key = reference.push().getKey();
         // Get the value to put
 
         // Save it under unique keys
@@ -168,6 +185,39 @@ abstract public class Model implements IModel {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private void seeIfModelExists() {
+        DatabaseInstance dbInstance = DatabaseSingleton.getDbInstance();
+
+        for (Field field : this.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(Key.class)) {
+                field.setAccessible(true);
+
+                try {
+                    dbInstance.getDatabase()
+                            .getReference(this.getClass().getSimpleName())
+                            .child(field.getName())
+                            .child(field.get(this).toString())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    key = dataSnapshot.getValue(String.class);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        synchronized (this) {
+            notifyAll();
         }
     }
 

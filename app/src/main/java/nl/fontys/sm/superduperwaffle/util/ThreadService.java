@@ -10,11 +10,13 @@ import java.util.concurrent.FutureTask;
 public class ThreadService {
     private static ExecutorService threadPool = Executors.newFixedThreadPool(4);
 
-    public static void queue(Runnable r) {
+    public static void submit(Runnable r) {
         threadPool.submit(r);
     }
 
     public static <T> void submit(FutureTask<T> futureTask) {
         threadPool.submit(futureTask);
     }
+
+
 }
