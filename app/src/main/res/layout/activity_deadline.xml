@@ -7,7 +7,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="nl.fontys.sm.superduperwaffle.ui.activities.MentaleToestandKlasActivity"
-    android:background="@drawable/mentaletoestand">
+    android:background="@drawable/deadline"
+    tools:context="nl.fontys.sm.superduperwaffle.ui.activities.DeadlineActivity">
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text=""
+        android:background="#00363636"
+        android:id="@+id/btnInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" />
 </RelativeLayout>

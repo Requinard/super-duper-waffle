@@ -10,23 +10,21 @@ import java.util.Calendar;
 
 import nl.fontys.sm.superduperwaffle.R;
 
-public class CalendarActivity extends AppCompatActivity {
+public class DeadlineActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
+        setContentView(R.layout.activity_deadline);
 
-        Button btnDeadline = (Button)findViewById(R.id.btnDeadline);
-        btnDeadline.setOnClickListener(handleClickDeadline );
+        Button btnInfo = (Button)findViewById(R.id.btnInfo);
+        btnInfo.setOnClickListener(handleClickInfo );
     }
 
-    private View.OnClickListener handleClickDeadline = new View.OnClickListener(){
+    private View.OnClickListener handleClickInfo = new View.OnClickListener(){
         public void onClick(View arg0){
-            Intent intent = new Intent(CalendarActivity.this,DeadlineActivity.class);
+            Intent intent = new Intent(DeadlineActivity.this,InfoActivity.class);
             startActivity(intent);
         }
     };
-
-
 }
