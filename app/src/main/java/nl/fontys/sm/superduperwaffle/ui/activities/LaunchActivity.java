@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import nl.fontys.sm.superduperwaffle.R;
+import nl.fontys.sm.superduperwaffle.db.models.ContainerLoggedUser;
 import nl.fontys.sm.superduperwaffle.db.models.User;
 import nl.fontys.sm.superduperwaffle.db.models.experimental.Model;
 import nl.fontys.sm.superduperwaffle.util.ThreadService;
@@ -55,7 +56,8 @@ public class LaunchActivity extends Activity {
     // string "canvas" as calendar ID.
     private View.OnClickListener handleClick = new View.OnClickListener() {
         public void onClick(View arg0) {
-            Intent intent = new Intent(LaunchActivity.this, ImportCalendarActivity.class);
+            ContainerLoggedUser.getInstance().setUser(new User("test", "test@123.nl"));
+            Intent intent = new Intent(LaunchActivity.this, AddCourseActivity.class);
             startActivity(intent);
         }
     };
