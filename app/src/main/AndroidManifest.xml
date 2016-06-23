@@ -22,12 +22,12 @@
         <activity android:name=".ui.activities.HomeActivity" />
         <activity android:name=".ui.activities.ImportCalendarActivity" />
         <activity android:name=".ui.activities.AddCourseActivity" />
-        <activity android:name=".ui.activities.HomeActivity" />
-        <activity android:name=".ui.activities.ImportCalendarActivity" />
         <activity android:name=".ui.activities.CalendarActivity" />
         <activity android:name=".ui.activities.TaakActivity" />
         <activity android:name=".ui.activities.MentaleToestandKlasActivity" />
         <activity android:name=".ui.activities.GemiddeldePerLeraarActivity"></activity>
+        <activity android:name=".ui.activities.ShowDeadlinesActivity"/>
+        <activity android:name=".ui.activities.ShowDeadlineDetailsActivity"/>
     </application>
 
 </manifest>

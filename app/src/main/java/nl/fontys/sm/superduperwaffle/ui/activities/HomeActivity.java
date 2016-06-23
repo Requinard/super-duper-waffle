@@ -33,7 +33,8 @@ public class HomeActivity extends Activity {
 
     private View.OnClickListener handleClickCalender = new View.OnClickListener() {
         public void onClick(View arg0) {
-            Intent intent = new Intent(HomeActivity.this, CalendarActivity.class);
+            //Intent intent = new Intent(HomeActivity.this, CalendarActivity.class);
+            Intent intent = new Intent(HomeActivity.this, ImportCalendarActivity.class);
             startActivity(intent);
         }
     };

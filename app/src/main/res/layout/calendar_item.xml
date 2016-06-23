@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    android:textColor="@color/colorBlue"
+    >
 
     <TextView
         android:id="@+id/tvEventSubjectTitle"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Subject Name"/>
+        android:text="Subject Name"
+        android:textColor="@color/colorBlue"
+
+        />
     <TextView
         android:id="@+id/tvEventDeadline"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Subject Name"/>
-    <TextView
-        android:id="@+id/tvEventDescription"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Subject Name"/>
+        android:text="Event Deadline"
+        android:textColor="@color/colorBlue"
+
+        />
 
 </LinearLayout>
+
+    <!--
+        Deze is het calendar_item van de listview van je deadlines
+    -->
