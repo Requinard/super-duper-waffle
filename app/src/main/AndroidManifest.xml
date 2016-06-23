@@ -25,6 +25,12 @@
         <activity android:name=".ui.activities.CalendarActivity" />
         <activity android:name=".ui.activities.TaakActivity" />
         <activity android:name=".ui.activities.MentaleToestandKlasActivity" />
+        <activity android:name=".ui.activities.GemiddeldePerLeraarActivity" />
+        <activity android:name=".ui.activities.DeadlineActivity" />
+        <activity android:name=".ui.activities.InfoActivity"></activity>
+        <activity android:name=".ui.activities.GemiddeldePerLeraarActivity"></activity>
+        <activity android:name=".ui.activities.ShowDeadlinesActivity"/>
+        <activity android:name=".ui.activities.ShowDeadlineDetailsActivity"/>
         <activity android:name=".ui.activities.GemiddeldePerLeraarActivity"></activity>
         <activity android:name=".ui.activities.ShowDeadlinesActivity"/>
         <activity android:name=".ui.activities.ShowDeadlineDetailsActivity"/>
