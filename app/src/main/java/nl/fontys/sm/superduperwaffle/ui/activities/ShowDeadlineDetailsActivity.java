@@ -2,9 +2,7 @@ package nl.fontys.sm.superduperwaffle.ui.activities;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -12,7 +10,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ import java.util.Date;
 
 import nl.fontys.sm.superduperwaffle.R;
 import nl.fontys.sm.superduperwaffle.wearable.Sensor;
-import nl.fontys.sm.superduperwaffle.wearable.connectionManager;
+import nl.fontys.sm.superduperwaffle.wearable.ConnectionManager;
 
 /**
  * Created by MT on 22-Jun-16.
@@ -28,7 +25,7 @@ import nl.fontys.sm.superduperwaffle.wearable.connectionManager;
 public class ShowDeadlineDetailsActivity extends Activity {
 
     LineChart lineChart;
-    connectionManager cm;
+    ConnectionManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +53,7 @@ public class ShowDeadlineDetailsActivity extends Activity {
         lineChart.setDescription("Stress levels");
         lineChart.setNoDataTextDescription("You need to provide data for the chart.");
 
-        cm = new connectionManager();
+        cm = new ConnectionManager();
 
         setData(20, 100);
 
