@@ -3,9 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/deadlineListLayout"
-    android:background="@color/colorBlue">
+    android:background="@drawable/Deadlines">
     <ListView
         android:layout_width="match_parent"
+        android:layout_marginTop="70dp"
         android:layout_height="match_parent"
         android:id="@+id/deadlineListView">
     </ListView>

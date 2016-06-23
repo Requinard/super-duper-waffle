@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="16dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add course:"
-        android:textSize="20sp"
-        android:id="@+id/tvAddCourse"/>
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/AddCourse"
+    >
 
     <AutoCompleteTextView
         android:id="@+id/languages"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></AutoCompleteTextView>
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        ></AutoCompleteTextView>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@color/colorBlue"
+        android:textColor="@color/colorBlack"
+        android:layout_gravity="center_horizontal"
         android:text="Add course"
         android:id="@+id/btnAddCourse"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="courses"
         android:textSize="20sp"
         android:id="@+id/tvCourses"/>
