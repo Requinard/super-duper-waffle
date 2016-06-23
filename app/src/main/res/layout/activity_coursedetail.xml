@@ -18,9 +18,14 @@
         android:id="@+id/tvDescription"
         android:text="Description"/>
     <!--
-        plek voor meer stuff pls add ok kthxbai
+        plek voor meer stuff
         denk aan stress levels etc
     -->
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/lineChartCourse" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
