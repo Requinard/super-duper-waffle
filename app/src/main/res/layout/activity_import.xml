@@ -3,34 +3,63 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ImportAgenda">
+    android:background="@color/colorBlue">
     >
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Import Agenda"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/colorBlack"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal" />
 
     <RadioGroup
         android:id="@+id/radiogroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical" />
+        android:orientation="vertical"/>
 
-    <EditText
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:text="30"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/etImportRange"/>
+        >
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="30"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/etImportRange"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" dagen"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"
+            android:textIsSelectable="false" />
+    </LinearLayout>
+
 
     <Button
         android:layout_width="200dp"
         android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:text="Import"
         android:id="@+id/btnImportCalendar"
-        android:background="@color/colorBlue"
-        android:textColor="@color/colorBlack"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal"/>
+        android:background="@color/colorBlack"
+        android:textColor="@color/colorBlue"
+        android:layout_gravity="center_horizontal" />
+
 
 </LinearLayout>

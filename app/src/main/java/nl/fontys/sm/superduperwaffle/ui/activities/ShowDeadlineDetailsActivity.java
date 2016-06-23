@@ -3,6 +3,7 @@ package nl.fontys.sm.superduperwaffle.ui.activities;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -22,7 +23,7 @@ import nl.fontys.sm.superduperwaffle.wearable.ConnectionManager;
 /**
  * Created by MT on 22-Jun-16.
  */
-public class ShowDeadlineDetailsActivity extends Activity {
+public class ShowDeadlineDetailsActivity extends AppCompatActivity {
 
     LineChart lineChart;
     ConnectionManager cm;

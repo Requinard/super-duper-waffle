@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import nl.fontys.sm.superduperwaffle.R;
@@ -11,7 +12,7 @@ import nl.fontys.sm.superduperwaffle.R;
 /**
  * Created by David on 5/20/2016.
  */
-public class HomeActivity extends Activity {
+public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

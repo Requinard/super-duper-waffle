@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +23,7 @@ import nl.fontys.sm.superduperwaffle.ui.adapters.CalendarItemAdapter;
 /**
  * Created by MT on 22-Jun-16.
  */
-public class ShowDeadlinesActivity extends Activity {
+public class ShowDeadlinesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

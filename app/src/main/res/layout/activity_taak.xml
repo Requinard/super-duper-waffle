@@ -8,8 +8,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="nl.fontys.sm.superduperwaffle.ui.activities.TaakActivity"
-    android:background="@drawable/TaakInplannen">
+    android:background="@color/colorBlue">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Taak inplannen"
+        android:textColor="@color/colorBlack"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="200dp"
@@ -20,19 +30,20 @@
         android:background="@color/colorWhite"
         android:textColor="@color/colorBlack"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="50dp" />
 
     <Button
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Plan In"
         android:id="@+id/btnPlanIn"
-        android:background="@color/colorBlue"
-        android:textColor="@color/colorBlack"
+        android:background="@color/colorBlack"
+        android:textColor="@color/colorBlue"
         android:layout_below="@+id/tbTaak"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"/>
+
 
 
 

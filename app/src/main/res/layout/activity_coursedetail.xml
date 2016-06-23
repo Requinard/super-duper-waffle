@@ -3,14 +3,24 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/InformatieDeadline">
+    android:background="@color/colorBlue">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Informatie deadline"
+        android:id="@+id/textView4"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvCourseName"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/colorBlue"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorBlack"
         android:text="Course Name"/>
     <TextView
         android:layout_width="wrap_content"
@@ -18,7 +28,7 @@
         android:id="@+id/tvDeadline"
         android:textAlignment="center"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorBlue"
+        android:textColor="@color/colorBlack"
         android:text="Deadline"/>
 
     <TextView
@@ -26,7 +36,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvDescription"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorBlue"
+        android:textColor="@color/colorBlack"
         android:text="Description"/>
     <!--
         plek voor meer stuff
@@ -42,8 +52,8 @@
         android:layout_height="50dp"
         android:text="Start"
         android:id="@+id/btnBekijkKalender"
-        android:background="@color/colorBlue"
-        android:textColor="@color/colorBlack"
+        android:background="@color/colorBlack"
+        android:textColor="@color/colorBlue"
         android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"/>
 

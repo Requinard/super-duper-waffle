@@ -2,7 +2,9 @@ package nl.fontys.sm.superduperwaffle.ui.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ import nl.fontys.sm.superduperwaffle.calendar.CalendarReader;
 /**
  * Created by MT on 10-Jun-16.
  */
-public class ImportCalendarActivity extends Activity {
+public class ImportCalendarActivity extends AppCompatActivity {
     RadioButton currentRb;
     //String rangeTxt;
 
@@ -79,6 +81,7 @@ public class ImportCalendarActivity extends Activity {
         for (String name : names) {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setText(name);
+            //radioButton.setTextColor(Color.WHITE);
             radioGroup.addView(radioButton);
         }
         ((ViewGroup) findViewById(R.id.radiogroup)).addView(radioGroup);
