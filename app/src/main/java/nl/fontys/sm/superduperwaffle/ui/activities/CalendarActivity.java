@@ -16,7 +16,9 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        //setContentView(R.layout.activity_import);
+
+        Button btnDeadline = (Button)findViewById(R.id.btnDeadline);
+        btnDeadline.setOnClickListener(handleClickDeadline );
     }
 
 
