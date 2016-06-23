@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private View.OnClickListener handleClickRegister = new View.OnClickListener(){
         public void onClick(View arg0){
             if (checkFieldsValid()) {
-                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
             }
         }

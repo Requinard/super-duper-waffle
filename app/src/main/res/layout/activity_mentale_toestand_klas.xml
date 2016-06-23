@@ -8,15 +8,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="nl.fontys.sm.superduperwaffle.ui.activities.MentaleToestandKlasActivity"
-    android:background="@color/colorBlack">
+    android:background="@drawable/MentaleToestandKlas">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Mentale toestand per klas"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="44dp" />
 </RelativeLayout>
