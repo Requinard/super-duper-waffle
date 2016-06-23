@@ -1,5 +1,6 @@
 package nl.fontys.sm.superduperwaffle.ui.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private View.OnClickListener handleClickRegister = new View.OnClickListener(){
         public void onClick(View arg0){
-            if (checkFieldsValid()) {
-                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                startActivity(intent);
-            }
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("Registratie is op het moment gesloten")
+                    .setMessage("Meer betakeys worden binnenkort verstuurd.")
+                    .show();
         }
     };
 

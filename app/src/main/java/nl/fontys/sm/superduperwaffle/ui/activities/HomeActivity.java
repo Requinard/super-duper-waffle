@@ -1,7 +1,7 @@
 package nl.fontys.sm.superduperwaffle.ui.activities;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -48,20 +48,20 @@ public class HomeActivity extends Activity {
 
     private View.OnClickListener handleClickMentaleToestandKlas = new View.OnClickListener() {
         public void onClick(View arg0) {
-            Dialog dialog = new Dialog(getBaseContext());
 
-            dialog.setTitle("Deze functionaliteit is er nog niet!");
-            dialog.show();
-
+            new AlertDialog.Builder(HomeActivity.this)
+                    .setTitle("Deze functionaliteit is enkel beschikbaar voor leraren")
+                    .setMessage("Jammer maar helaas")
+                    .show();
         }
     };
 
     private View.OnClickListener handleClickGemiddeldePerLeraar = new View.OnClickListener() {
         public void onClick(View arg0) {
-            Dialog dialog = new Dialog(getBaseContext());
-
-            dialog.setTitle("Deze functionaliteit is er nog niet!");
-            dialog.show();
+            new AlertDialog.Builder(HomeActivity.this)
+                    .setTitle("Deze functionaliteit is enkel beschikbaar voor Blokeigenaren")
+                    .setMessage("Kom later terug")
+                    .show();
         }
     };
 
